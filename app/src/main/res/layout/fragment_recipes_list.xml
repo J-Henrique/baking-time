@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ui.MainActivity">
+    android:padding="16dp"
+    tools:context=".view.ui.RecipesListFragment">
 
-    <fragment
-        android:id="@+id/recipes_fragment"
-        android:name="com.jhbb.baking_time.view.ui.RecipesListFragment"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recipes_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</LinearLayout>
+</FrameLayout>
