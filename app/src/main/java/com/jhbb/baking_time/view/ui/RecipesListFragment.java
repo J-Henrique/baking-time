@@ -1,5 +1,6 @@
 package com.jhbb.baking_time.view.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,15 +21,37 @@ import com.jhbb.baking_time.view.loader.RecipesLoader;
 import java.util.List;
 
 public class RecipesListFragment extends Fragment
-        implements LoaderManager.LoaderCallbacks<List<RecipeModel>> {
+        implements LoaderManager.LoaderCallbacks<List<RecipeModel>>, RecipesAdapter.AdapterOnClickHandler {
 
     private RecyclerView mRecyclerView;
     private RecipesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    OnRecipeClickListener mCallback;
+
+    @Override
+    public void onAdapterClick(RecipeModel recipeModel) {
+        mCallback.onRecipeClickListener(recipeModel);
+    }
+
+    public interface OnRecipeClickListener {
+        void onRecipeClickListener(RecipeModel recipeModel);
+    }
+
     public static final int RECIPES_LOADER = 1;
 
     public RecipesListFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (OnRecipeClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnRecipeClickListener");
+        }
     }
 
     @Override
@@ -47,7 +70,7 @@ public class RecipesListFragment extends Fragment
         mRecyclerView.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mAdapter = new RecipesAdapter();
+        mAdapter = new RecipesAdapter(this);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);

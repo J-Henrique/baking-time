@@ -18,6 +18,16 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
 
     private List<RecipeModel> mRecipesDataset;
 
+    private final AdapterOnClickHandler mAdapterOnClickHandler;
+
+    public interface AdapterOnClickHandler {
+        void onAdapterClick(RecipeModel recipeModel);
+    }
+
+    public RecipesAdapter(AdapterOnClickHandler mAdapterOnClickHandler) {
+        this.mAdapterOnClickHandler = mAdapterOnClickHandler;
+    }
+
     @NonNull
     @Override
     public RecipesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -29,11 +39,18 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
 
     @Override
     public void onBindViewHolder(@NonNull RecipesViewHolder recipesViewHolder, int i) {
-        RecipeModel recipeModel = mRecipesDataset.get(i);
+        final RecipeModel recipeModel = mRecipesDataset.get(i);
 
         if (recipeModel != null) {
             recipesViewHolder.mRecipeNameTextView.setText(recipeModel.getName());
         }
+
+        recipesViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapterOnClickHandler.onAdapterClick(recipeModel);
+            }
+        });
     }
 
     @Override
