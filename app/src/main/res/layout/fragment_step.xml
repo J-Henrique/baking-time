@@ -1,32 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:background="@color/colorPrimaryDark"
+    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        android:id="@+id/simple_exo_player"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 
-    <View
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorLineBorder"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
+    <View style="@style/DefaultDividerStyle" />
 
-    <TextView
-        android:id="@+id/step_instruction_text_view"
+    <LinearLayout
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
-    <View
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorLineBorder"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        <TextView
+            android:id="@+id/step_description_text_view"
+            tools:text="Prep the cookie crust."
+            style="@style/DefaultTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View style="@style/DefaultDividerStyle" />
+
+        <TextView
+            android:text="@string/title_step_instructions"
+            style="@style/DefaultTextStyle"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/step_instruction_text_view"
+            style="@style/DefaultTextStyle"
+            android:textSize="16dp"
+            tools:text="2. Whisk the graham cracker crumbs, 50 grams (1/4 cup) of sugar, and 1/2 teaspoon of salt together in a medium bowl. Pour the melted butter and 1 teaspoon of vanilla into the dry ingredients and stir together until evenly mixed."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
     <FrameLayout
         android:layout_gravity="bottom"

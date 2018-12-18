@@ -3,4 +3,6 @@
 
     <string name="button_next">Next</string>
     <string name="button_previous">Previous</string>
+
+    <string name="title_step_instructions">Instructions</string>
 </resources>

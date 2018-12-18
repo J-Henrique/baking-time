@@ -21,6 +21,7 @@
 
         <activity
             android:name=".view.ui.activity.DetailsActivity"
+            android:launchMode="singleTop"
             android:parentActivityName=".view.ui.activity.MainActivity" />
 
         <activity
