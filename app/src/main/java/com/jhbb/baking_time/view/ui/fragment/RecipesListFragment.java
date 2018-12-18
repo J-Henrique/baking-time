@@ -1,4 +1,4 @@
-package com.jhbb.baking_time.view.ui;
+package com.jhbb.baking_time.view.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;

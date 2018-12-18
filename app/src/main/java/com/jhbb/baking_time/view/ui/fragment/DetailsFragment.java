@@ -1,5 +1,6 @@
-package com.jhbb.baking_time.view.ui;
+package com.jhbb.baking_time.view.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,13 +19,38 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-public class RecipeDetailsFragment extends Fragment {
+public class DetailsFragment extends Fragment
+        implements StepsAdapter.OnStepAdapterClickListener {
+
+    private static final String TAG = DetailsFragment.class.getSimpleName();
 
     private RecyclerView mStepsRecyclerView;
     private StepsAdapter mStepsAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public RecipeDetailsFragment() {
+    OnStepClickListener mCallback;
+
+    @Override
+    public void onStepAdapterClickListener(int itemClickedIndex) {
+        mCallback.onStepClickListener(itemClickedIndex);
+    }
+
+    public interface OnStepClickListener {
+        void onStepClickListener(int itemClickedIndex);
+    }
+
+    public DetailsFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (OnStepClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnStepClickListener");
+        }
     }
 
     @Nullable
@@ -36,7 +62,7 @@ public class RecipeDetailsFragment extends Fragment {
         mStepsRecyclerView.setHasFixedSize(false);
 
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mStepsAdapter = new StepsAdapter();
+        mStepsAdapter = new StepsAdapter(this);
 
         mStepsRecyclerView.setAdapter(mStepsAdapter);
         mStepsRecyclerView.setLayoutManager(mLayoutManager);

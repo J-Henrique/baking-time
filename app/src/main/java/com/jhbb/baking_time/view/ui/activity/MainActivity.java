@@ -1,4 +1,4 @@
-package com.jhbb.baking_time.view.ui;
+package com.jhbb.baking_time.view.ui.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.jhbb.baking_time.R;
 import com.jhbb.baking_time.model.RecipeModel;
+import com.jhbb.baking_time.view.ui.fragment.RecipesListFragment;
 
 import org.parceler.Parcels;
 
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity
     public void onRecipeClickListener(RecipeModel recipeModel) {
         Log.v(TAG, "item clicado: " + recipeModel);
 
-        Intent startDetailsActivity = new Intent(this, RecipeDetailsActivity.class);
+        Intent startDetailsActivity = new Intent(this, DetailsActivity.class);
         startDetailsActivity.putExtra("recipeModel", Parcels.wrap(recipeModel));
 
         startActivity(startDetailsActivity);

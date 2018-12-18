@@ -2,6 +2,7 @@ package com.jhbb.baking_time.view.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,18 @@ import java.util.List;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
 
+    private static final String TAG = StepsAdapter.class.getSimpleName();
+
     List<StepModel> mStepsDataset;
+    OnStepAdapterClickListener mCallback;
+
+    public interface OnStepAdapterClickListener {
+        void onStepAdapterClickListener(int itemClickedIndex);
+    }
+
+    public StepsAdapter(OnStepAdapterClickListener mCallback) {
+        this.mCallback = mCallback;
+    }
 
     @NonNull
     @Override
@@ -26,12 +38,20 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StepsViewHolder stepsViewHolder, int i) {
+    public void onBindViewHolder(@NonNull StepsViewHolder stepsViewHolder, final int i) {
         StepModel step = mStepsDataset.get(i);
+        Log.v(TAG, "Binding step: " + step.getShortDescription());
 
         if (step != null) {
             stepsViewHolder.mStepTextView.setText(step.getShortDescription());
         }
+
+        stepsViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onStepAdapterClickListener(i);
+            }
+        });
     }
 
     @Override
