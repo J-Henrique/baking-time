@@ -14,8 +14,6 @@ import java.util.List;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder> {
 
-    private static final String TAG = RecipesAdapter.class.getSimpleName();
-
     private List<RecipeModel> mRecipesDataset;
 
     private final AdapterOnClickHandler mAdapterOnClickHandler;

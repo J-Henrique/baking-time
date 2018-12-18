@@ -2,27 +2,30 @@ package com.jhbb.baking_time.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
+@Parcel
 public class RecipeModel {
 
     @SerializedName("id")
-    private Integer id;
+    public Integer id;
 
     @SerializedName("name")
-    private String name;
+    public String name;
 
     @SerializedName("ingredients")
-    private List<IngredientModel> ingredients;
+    public List<IngredientModel> ingredients;
 
     @SerializedName("steps")
-    private List<StepModel> steps;
+    public List<StepModel> steps;
 
     @SerializedName("servings")
-    private Integer servings;
+    public Integer servings;
 
     @SerializedName("image")
-    private String image;
+    public String image;
 
     public Integer getId() {
         return id;
@@ -70,5 +73,17 @@ public class RecipeModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "RecipeModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", ingredients=" + ingredients +
+                ", steps=" + steps +
+                ", servings=" + servings +
+                ", image='" + image + '\'' +
+                '}';
     }
 }

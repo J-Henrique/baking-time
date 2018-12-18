@@ -2,16 +2,19 @@ package com.jhbb.baking_time.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class IngredientModel {
 
     @SerializedName("quantity")
-    private double quantity;
+    public double quantity;
 
     @SerializedName("measure")
-    private String measure;
+    public String measure;
 
     @SerializedName("ingredient")
-    private String ingredient;
+    public String ingredient;
 
     public double getQuantity() {
         return quantity;
