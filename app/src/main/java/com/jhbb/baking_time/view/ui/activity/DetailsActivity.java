@@ -31,6 +31,7 @@ public class DetailsActivity extends AppCompatActivity
 
             Bundle args = new Bundle();
             args.putParcelable("stepsList", Parcels.wrap(mRecipe.getSteps()));
+            args.putParcelable("ingredientsList", Parcels.wrap(mRecipe.getIngredients()));
 
             DetailsFragment detailsFragment = new DetailsFragment();
             detailsFragment.setArguments(args);

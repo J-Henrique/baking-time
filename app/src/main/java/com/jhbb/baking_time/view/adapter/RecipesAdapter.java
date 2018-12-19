@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jhbb.baking_time.R;
 import com.jhbb.baking_time.model.RecipeModel;
+import com.jhbb.baking_time.utils.RecipeImageUtils;
 
 import java.util.List;
 
@@ -22,8 +24,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
         void onAdapterClick(RecipeModel recipeModel);
     }
 
-    public RecipesAdapter(AdapterOnClickHandler mAdapterOnClickHandler) {
-        this.mAdapterOnClickHandler = mAdapterOnClickHandler;
+    public RecipesAdapter(AdapterOnClickHandler adapterOnClickHandler) {
+        this.mAdapterOnClickHandler = adapterOnClickHandler;
     }
 
     @NonNull
@@ -40,7 +42,10 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
         final RecipeModel recipeModel = mRecipesDataset.get(i);
 
         if (recipeModel != null) {
-            recipesViewHolder.mRecipeNameTextView.setText(recipeModel.getName());
+            String recipeName = recipeModel.getName();
+
+            recipesViewHolder.mRecipeNameTextView.setText(recipeName);
+            recipesViewHolder.mRecipeImageView.setImageResource(RecipeImageUtils.getBrownieImage(recipeName));
         }
 
         recipesViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -58,11 +63,13 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
 
     public class RecipesViewHolder extends RecyclerView.ViewHolder {
 
+        ImageView mRecipeImageView;
         TextView mRecipeNameTextView;
 
         public RecipesViewHolder(@NonNull View itemView) {
             super(itemView);
             mRecipeNameTextView = itemView.findViewById(R.id.recipe_name_text_view);
+            mRecipeImageView = itemView.findViewById(R.id.recipe_image_view);
         }
     }
 

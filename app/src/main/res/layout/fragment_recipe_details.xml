@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -10,9 +9,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <TextView
-            android:text="INGREDIENTES"
+            android:text="@string/title_details_ingredients"
             style="@style/DefaultTextStyle"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/ingredients_list_text_view"
+            style="@style/DefaultTextStyle"
+            android:lineSpacingExtra="6dp"
+            android:textSize="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

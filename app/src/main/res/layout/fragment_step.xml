@@ -52,6 +52,7 @@
             android:text="@string/button_previous"
             android:layout_gravity="left|bottom"
             android:id="@+id/previous_button"
+            style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -59,6 +60,7 @@
             android:text="@string/button_next"
             android:layout_gravity="right|bottom"
             android:id="@+id/next_button"
+            style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </FrameLayout>

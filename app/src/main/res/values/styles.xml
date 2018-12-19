@@ -11,7 +11,7 @@
     <style name="DefaultTextStyle">
         <item name="android:background">@color/colorPrimaryDark</item>
         <item name="android:textSize">30dp</item>
-        <item name="android:textColor">#ffffff</item>
+        <item name="android:textColor">@color/defaultText</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingLeft">6dp</item>
@@ -21,7 +21,7 @@
     <style name="DefaultDividerStyle">
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:background">#ffffff</item>
+        <item name="android:background">@color/defaultDivider</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
     </style>

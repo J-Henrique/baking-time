@@ -10,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jhbb.baking_time.R;
+import com.jhbb.baking_time.model.IngredientModel;
 import com.jhbb.baking_time.model.StepModel;
 import com.jhbb.baking_time.view.adapter.StepsAdapter;
 
@@ -27,6 +29,7 @@ public class DetailsFragment extends Fragment
     private RecyclerView mStepsRecyclerView;
     private StepsAdapter mStepsAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private TextView mIngredientsTextView;
 
     OnStepClickListener mCallback;
 
@@ -40,6 +43,7 @@ public class DetailsFragment extends Fragment
     }
 
     public DetailsFragment() {
+
     }
 
     @Override
@@ -59,6 +63,8 @@ public class DetailsFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_recipe_details, container, false);
 
         mStepsRecyclerView = view.findViewById(R.id.steps_recycler_view);
+        mIngredientsTextView = view.findViewById(R.id.ingredients_list_text_view);
+
         mStepsRecyclerView.setHasFixedSize(false);
 
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -70,6 +76,17 @@ public class DetailsFragment extends Fragment
         List<StepModel> stepList = Parcels.unwrap(getArguments().getParcelable("stepsList"));
         if (stepList != null) {
             mStepsAdapter.setStepsDataset(stepList);
+        }
+
+        List<IngredientModel> ingredientsList = Parcels.unwrap((getArguments().getParcelable("ingredientsList")));
+        if (ingredientsList != null) {
+            for (IngredientModel item : ingredientsList) {
+                String ingredientMeasure =
+                        item.getQuantity() + " "
+                                + item.getMeasure() + " "
+                                + item.getIngredient() + "\n";
+                mIngredientsTextView.append(ingredientMeasure);
+            }
         }
 
         return view;

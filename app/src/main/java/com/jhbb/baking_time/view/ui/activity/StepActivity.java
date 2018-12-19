@@ -42,8 +42,11 @@ public class StepActivity extends AppCompatActivity
         mStepList = Parcels.unwrap(getIntent().getParcelableExtra("stepList"));
 
         if (mStepList != null) {
+            StepModel currentStep = mStepList.get(mCurrentStepIndex);
+            getSupportActionBar().setTitle(currentStep.getShortDescription());
+
             Bundle args = new Bundle();
-            args.putParcelable("currentStep", Parcels.wrap(mStepList.get(mCurrentStepIndex)));
+            args.putParcelable("currentStep", Parcels.wrap(currentStep));
 
             StepFragment stepFragment = new StepFragment();
             stepFragment.setArguments(args);
@@ -77,15 +80,7 @@ public class StepActivity extends AppCompatActivity
             mCurrentStepIndex++;
         }
 
-        Bundle args = new Bundle();
-        args.putParcelable("currentStep", Parcels.wrap(mStepList.get(mCurrentStepIndex)));
-
-        StepFragment stepFragment = new StepFragment();
-        stepFragment.setArguments(args);
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.current_step_container, stepFragment)
-                .commit();
+        refreshFragment();
     }
 
     @Override
@@ -94,6 +89,10 @@ public class StepActivity extends AppCompatActivity
             mCurrentStepIndex--;
         }
 
+        refreshFragment();
+    }
+
+    private void refreshFragment() {
         Bundle args = new Bundle();
         args.putParcelable("currentStep", Parcels.wrap(mStepList.get(mCurrentStepIndex)));
 
