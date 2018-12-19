@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,8 +10,6 @@
         android:id="@+id/simple_exo_player"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
-
-    <View style="@style/DefaultDividerStyle" />
 
     <LinearLayout
         android:background="@color/colorPrimaryDark"
