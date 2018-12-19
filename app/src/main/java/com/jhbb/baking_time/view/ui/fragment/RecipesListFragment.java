@@ -9,13 +9,16 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.jhbb.baking_time.R;
 import com.jhbb.baking_time.model.RecipeModel;
+import com.jhbb.baking_time.utils.NetworkUtils;
 import com.jhbb.baking_time.view.adapter.RecipesAdapter;
 import com.jhbb.baking_time.view.loader.RecipesLoader;
 
@@ -60,6 +63,13 @@ public class RecipesListFragment extends Fragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        if (!NetworkUtils.isOnline(getContext())) {
+            Toast.makeText(getContext(), R.string.warning_connectivity, Toast.LENGTH_LONG).show();
+
+            mLoadingProgressBar.setVisibility(View.INVISIBLE);
+            return;
+        }
 
         getLoaderManager().initLoader(RECIPES_LOADER, null, this);
     }

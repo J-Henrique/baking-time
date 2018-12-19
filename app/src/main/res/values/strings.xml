@@ -6,4 +6,6 @@
 
     <string name="title_step_instructions">Instructions</string>
     <string name="title_details_ingredients">Ingredients</string>
+
+    <string name="warning_connectivity">Please, check your connection.</string>
 </resources>
