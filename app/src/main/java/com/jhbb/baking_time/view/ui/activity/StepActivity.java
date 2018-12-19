@@ -1,8 +1,12 @@
 
 package com.jhbb.baking_time.view.ui.activity;
 
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.jhbb.baking_time.R;
 import com.jhbb.baking_time.model.StepModel;
@@ -21,6 +25,17 @@ public class StepActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+            getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+
+            getSupportActionBar().hide();
+        }
+
         setContentView(R.layout.activity_step);
 
         mCurrentStepIndex = getIntent().getIntExtra("stepIndex", 0);
@@ -36,6 +51,23 @@ public class StepActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.current_step_container, stepFragment)
                     .commit();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+            getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+
+            getSupportActionBar().hide();
+        } else {
+            getSupportActionBar().show();
         }
     }
 

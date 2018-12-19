@@ -1,6 +1,7 @@
 package com.jhbb.baking_time.view.ui.fragment;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -77,17 +78,33 @@ public class StepFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_step, container, false);
 
-        mStepInstructionTextView = view.findViewById(R.id.step_instruction_text_view);
-        mStepDescriptionTextView = view.findViewById(R.id.step_description_text_view);
-        mNextButton = view.findViewById(R.id.next_button);
-        mPreviousButton = view.findViewById(R.id.previous_button);
-        mPlayerView = view.findViewById(R.id.simple_exo_player);
-
         StepModel currentStep = Parcels.unwrap(getArguments().getParcelable("currentStep"));
         if (currentStep != null) {
-            mStepDescriptionTextView.setText(currentStep.getShortDescription());
-            mStepInstructionTextView.setText(currentStep.getDescription());
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                mStepInstructionTextView = view.findViewById(R.id.step_instruction_text_view);
+                mStepDescriptionTextView = view.findViewById(R.id.step_description_text_view);
+                mNextButton = view.findViewById(R.id.next_button);
+                mPreviousButton = view.findViewById(R.id.previous_button);
 
+                mStepDescriptionTextView.setText(currentStep.getShortDescription());
+                mStepInstructionTextView.setText(currentStep.getDescription());
+
+                mNextButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mNextCallback.onNextClickListener();
+                    }
+                });
+
+                mPreviousButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPreviousCallback.onPreviousClickListener();
+                    }
+                });
+            }
+
+            mPlayerView = view.findViewById(R.id.simple_exo_player);
             if (!TextUtils.isEmpty(currentStep.getVideoURL())) {
                 mPlayerView.setVisibility(View.VISIBLE);
                 initializePlayer(Uri.parse(currentStep.getVideoURL()));
@@ -95,20 +112,6 @@ public class StepFragment extends Fragment {
                 mPlayerView.setVisibility(View.GONE);
             }
         }
-
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mNextCallback.onNextClickListener();
-            }
-        });
-
-        mPreviousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPreviousCallback.onPreviousClickListener();
-            }
-        });
 
         return view;
     }

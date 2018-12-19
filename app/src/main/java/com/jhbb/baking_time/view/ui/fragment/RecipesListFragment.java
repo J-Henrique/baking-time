@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.jhbb.baking_time.R;
 import com.jhbb.baking_time.model.RecipeModel;
@@ -26,6 +27,8 @@ public class RecipesListFragment extends Fragment
     private RecyclerView mRecyclerView;
     private RecipesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private ProgressBar mLoadingProgressBar;
 
     OnRecipeClickListener mCallback;
 
@@ -66,8 +69,12 @@ public class RecipesListFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipes_list, container);
 
+        mLoadingProgressBar = view.findViewById(R.id.loading_progress_bar);
+        mLoadingProgressBar.setVisibility(View.VISIBLE);
+
         mRecyclerView = view.findViewById(R.id.recipes_recycler_view);
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setVisibility(View.INVISIBLE);
 
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mAdapter = new RecipesAdapter(this);
@@ -87,6 +94,9 @@ public class RecipesListFragment extends Fragment
     @Override
     public void onLoadFinished(@NonNull Loader<List<RecipeModel>> loader, List<RecipeModel> recipeModels) {
         mAdapter.setRecipesDataset(recipeModels);
+
+        mLoadingProgressBar.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
