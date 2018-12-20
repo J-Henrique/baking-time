@@ -2,6 +2,7 @@ package com.jhbb.baking_time.view.ui.fragment;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -28,6 +31,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.jhbb.baking_time.R;
 import com.jhbb.baking_time.model.StepModel;
+import com.jhbb.baking_time.utils.NetworkUtils;
 
 import org.parceler.Parcels;
 
@@ -45,6 +49,8 @@ public class StepFragment extends Fragment {
     SimpleExoPlayer mPlayer;
     SimpleExoPlayerView mPlayerView;
 
+    ImageView mErrorLoadingImageView;
+
     public interface OnNextClickListener {
         void onNextClickListener();
     }
@@ -54,6 +60,27 @@ public class StepFragment extends Fragment {
     }
 
     public StepFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
+                && !getResources().getBoolean(R.bool.isLargeScreen)) {
+
+            try {
+                mNextCallback = (OnNextClickListener) context;
+            } catch (ClassCastException e) {
+                throw new ClassCastException(context.toString() + " must implement OnNextClickListener");
+            }
+
+            try {
+                mPreviousCallback = (OnPreviousClickListener) context;
+            } catch (ClassCastException e) {
+                throw new ClassCastException(context.toString() + " must implement OnNextClickListener");
+            }
+        }
     }
 
     @Nullable
@@ -95,12 +122,22 @@ public class StepFragment extends Fragment {
                 }
             }
 
+            mErrorLoadingImageView = view.findViewById(R.id.error_loading_image_view);
             mPlayerView = view.findViewById(R.id.simple_exo_player);
             if (!TextUtils.isEmpty(currentStep.getVideoURL())) {
-                mPlayerView.setVisibility(View.VISIBLE);
-                initializePlayer(Uri.parse(currentStep.getVideoURL()));
+                if (NetworkUtils.isOnline(getContext())) {
+                    mPlayerView.setVisibility(View.VISIBLE);
+                    mErrorLoadingImageView.setVisibility(View.GONE);
+                    initializePlayer(Uri.parse(currentStep.getVideoURL()));
+                } else {
+                    mErrorLoadingImageView.setVisibility(View.VISIBLE);
+                    mPlayerView.setVisibility(View.GONE);
+
+                    Toast.makeText(getContext(), R.string.warning_connectivity, Toast.LENGTH_LONG).show();
+                }
             } else {
                 mPlayerView.setVisibility(View.GONE);
+                mErrorLoadingImageView.setVisibility(View.GONE);
             }
         }
 
@@ -120,7 +157,6 @@ public class StepFragment extends Fragment {
 
             mPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector, loadControl);
             mPlayerView.setPlayer(mPlayer);
-
             String userAgent = Util.getUserAgent(getContext(), "BakingTime");
             MediaSource mediaSource
                     = new ExtractorMediaSource(
