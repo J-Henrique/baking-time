@@ -9,7 +9,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,7 @@ public class RecipesListFragment extends Fragment
 
     private RecyclerView mRecyclerView;
     private RecipesAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+//    private RecyclerView.LayoutManager mLayoutManager;
 
     private ProgressBar mLoadingProgressBar;
 
@@ -86,10 +85,10 @@ public class RecipesListFragment extends Fragment
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setVisibility(View.INVISIBLE);
 
-        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+//        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mAdapter = new RecipesAdapter(this);
 
-        mRecyclerView.setLayoutManager(mLayoutManager);
+//        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
