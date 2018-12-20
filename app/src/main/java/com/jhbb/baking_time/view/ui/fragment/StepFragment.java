@@ -56,23 +56,6 @@ public class StepFragment extends Fragment {
     public StepFragment() {
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        try {
-            mNextCallback = (OnNextClickListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement OnNextClickListener");
-        }
-
-        try {
-            mPreviousCallback = (OnPreviousClickListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement OnPreviousClickListener");
-        }
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,28 +63,36 @@ public class StepFragment extends Fragment {
 
         StepModel currentStep = Parcels.unwrap(getArguments().getParcelable("currentStep"));
         if (currentStep != null) {
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
+                    || getResources().getBoolean(R.bool.isLargeScreen)) {
                 mStepInstructionTextView = view.findViewById(R.id.step_instruction_text_view);
                 mStepDescriptionTextView = view.findViewById(R.id.step_description_text_view);
                 mNextButton = view.findViewById(R.id.next_button);
                 mPreviousButton = view.findViewById(R.id.previous_button);
 
-                mStepDescriptionTextView.setText(currentStep.getShortDescription());
                 mStepInstructionTextView.setText(currentStep.getDescription());
 
-                mNextButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mNextCallback.onNextClickListener();
-                    }
-                });
+                if (mStepDescriptionTextView != null) {
+                    mStepDescriptionTextView.setText(currentStep.getShortDescription());
+                }
 
-                mPreviousButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPreviousCallback.onPreviousClickListener();
-                    }
-                });
+                if (mNextButton != null) {
+                    mNextButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mNextCallback.onNextClickListener();
+                        }
+                    });
+                }
+
+                if (mPreviousButton != null) {
+                    mPreviousButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mPreviousCallback.onPreviousClickListener();
+                        }
+                    });
+                }
             }
 
             mPlayerView = view.findViewById(R.id.simple_exo_player);

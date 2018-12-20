@@ -8,6 +8,7 @@ import android.util.Log;
 import com.jhbb.baking_time.R;
 import com.jhbb.baking_time.model.RecipeModel;
 import com.jhbb.baking_time.view.ui.fragment.DetailsFragment;
+import com.jhbb.baking_time.view.ui.fragment.StepFragment;
 
 import org.parceler.Parcels;
 
@@ -29,16 +30,28 @@ public class DetailsActivity extends AppCompatActivity
         if (mRecipe != null) {
             Log.v(TAG, "receita selecionada: " + mRecipe.getName());
 
-            Bundle args = new Bundle();
-            args.putParcelable("stepsList", Parcels.wrap(mRecipe.getSteps()));
-            args.putParcelable("ingredientsList", Parcels.wrap(mRecipe.getIngredients()));
+            Bundle detailsArgs = new Bundle();
+            detailsArgs.putParcelable("stepsList", Parcels.wrap(mRecipe.getSteps()));
+            detailsArgs.putParcelable("ingredientsList", Parcels.wrap(mRecipe.getIngredients()));
 
             DetailsFragment detailsFragment = new DetailsFragment();
-            detailsFragment.setArguments(args);
+            detailsFragment.setArguments(detailsArgs);
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.steps_container, detailsFragment)
                     .commit();
+
+            if (getApplicationContext().getResources().getBoolean(R.bool.isLargeScreen)) {
+                Bundle stepArgs = new Bundle();
+                stepArgs.putParcelable("currentStep", Parcels.wrap(mRecipe.getSteps().get(0)));
+
+                StepFragment stepFragment = new StepFragment();
+                stepFragment.setArguments(stepArgs);
+
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.current_step_container, stepFragment)
+                        .commit();
+            }
         }
     }
 
@@ -46,10 +59,23 @@ public class DetailsActivity extends AppCompatActivity
     public void onStepClickListener(int itemClickedIndex) {
         Log.v(TAG, "indice do step clicado: " + itemClickedIndex);
 
-        Intent startStepActivity = new Intent(this, StepActivity.class);
-        startStepActivity.putExtra("stepIndex", itemClickedIndex);
-        startStepActivity.putExtra("stepList", Parcels.wrap(mRecipe.getSteps()));
+        if (getApplicationContext().getResources().getBoolean(R.bool.isLargeScreen)) {
+            Bundle stepArgs = new Bundle();
+            stepArgs.putParcelable("currentStep", Parcels.wrap(mRecipe.getSteps().get(itemClickedIndex)));
 
-        startActivity(startStepActivity);
+            StepFragment stepFragment = new StepFragment();
+            stepFragment.setArguments(stepArgs);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.current_step_container, stepFragment)
+                    .commit();
+        } else {
+            Intent startStepActivity = new Intent(this, StepActivity.class);
+            startStepActivity.putExtra("stepIndex", itemClickedIndex);
+            startStepActivity.putExtra("stepList", Parcels.wrap(mRecipe.getSteps()));
+
+            startActivity(startStepActivity);
+        }
+
     }
 }

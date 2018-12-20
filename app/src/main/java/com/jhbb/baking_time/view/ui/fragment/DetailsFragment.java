@@ -24,8 +24,6 @@ import java.util.List;
 public class DetailsFragment extends Fragment
         implements StepsAdapter.OnStepAdapterClickListener {
 
-    private static final String TAG = DetailsFragment.class.getSimpleName();
-
     private RecyclerView mStepsRecyclerView;
     private StepsAdapter mStepsAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
