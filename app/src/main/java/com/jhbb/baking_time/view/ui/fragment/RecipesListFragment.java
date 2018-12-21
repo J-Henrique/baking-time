@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.jhbb.baking_time.R;
-import com.jhbb.baking_time.model.RecipeModel;
+import com.jhbb.baking_time.model.entity.RecipeModel;
 import com.jhbb.baking_time.utils.NetworkUtils;
 import com.jhbb.baking_time.view.adapter.RecipesAdapter;
 import com.jhbb.baking_time.view.loader.RecipesLoader;

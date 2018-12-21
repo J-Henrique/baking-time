@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.jhbb.baking_time.R;
-import com.jhbb.baking_time.model.RecipeModel;
+import com.jhbb.baking_time.model.entity.RecipeModel;
 import com.jhbb.baking_time.view.ui.fragment.DetailsFragment;
 import com.jhbb.baking_time.view.ui.fragment.StepFragment;
 

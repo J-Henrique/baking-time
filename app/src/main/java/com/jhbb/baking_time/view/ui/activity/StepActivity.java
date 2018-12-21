@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.jhbb.baking_time.R;
-import com.jhbb.baking_time.model.StepModel;
+import com.jhbb.baking_time.model.entity.StepModel;
 import com.jhbb.baking_time.view.ui.fragment.StepFragment;
 
 import org.parceler.Parcels;

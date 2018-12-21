@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jhbb.baking_time.R;
-import com.jhbb.baking_time.model.IngredientModel;
-import com.jhbb.baking_time.model.StepModel;
+import com.jhbb.baking_time.model.entity.IngredientModel;
+import com.jhbb.baking_time.model.entity.StepModel;
 import com.jhbb.baking_time.view.adapter.StepsAdapter;
 
 import org.parceler.Parcels;

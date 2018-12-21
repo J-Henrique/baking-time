@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jhbb.baking_time.R;
-import com.jhbb.baking_time.model.StepModel;
+import com.jhbb.baking_time.model.entity.StepModel;
 
 import java.util.List;
 

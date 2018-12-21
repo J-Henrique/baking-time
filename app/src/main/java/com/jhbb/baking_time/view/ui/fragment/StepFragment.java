@@ -2,7 +2,6 @@ package com.jhbb.baking_time.view.ui.fragment;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,7 +29,7 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.jhbb.baking_time.R;
-import com.jhbb.baking_time.model.StepModel;
+import com.jhbb.baking_time.model.entity.StepModel;
 import com.jhbb.baking_time.utils.NetworkUtils;
 
 import org.parceler.Parcels;

@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 
-import com.jhbb.baking_time.model.RecipeModel;
+import com.jhbb.baking_time.model.entity.RecipeModel;
 import com.jhbb.baking_time.utilities.RetrofitClient;
 
 import java.io.IOException;

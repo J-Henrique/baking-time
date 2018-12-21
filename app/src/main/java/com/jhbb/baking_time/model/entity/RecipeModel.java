@@ -1,4 +1,4 @@
-package com.jhbb.baking_time.model;
+package com.jhbb.baking_time.model.entity;
 
 import com.google.gson.annotations.SerializedName;
 

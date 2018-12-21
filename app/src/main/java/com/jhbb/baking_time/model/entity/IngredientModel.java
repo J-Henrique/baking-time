@@ -1,11 +1,18 @@
-package com.jhbb.baking_time.model;
+package com.jhbb.baking_time.model.entity;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
 @Parcel
+@Entity(tableName = "ingredients")
 public class IngredientModel {
+
+    @PrimaryKey(autoGenerate = true)
+    public int id;
 
     @SerializedName("quantity")
     public double quantity;
@@ -38,5 +45,13 @@ public class IngredientModel {
 
     public void setIngredient(String ingredient) {
         this.ingredient = ingredient;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

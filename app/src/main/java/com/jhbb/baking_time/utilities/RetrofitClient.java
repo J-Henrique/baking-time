@@ -1,8 +1,6 @@
 package com.jhbb.baking_time.utilities;
 
-import android.util.Log;
-
-import com.jhbb.baking_time.model.RecipeModel;
+import com.jhbb.baking_time.model.entity.RecipeModel;
 
 import java.util.List;
 

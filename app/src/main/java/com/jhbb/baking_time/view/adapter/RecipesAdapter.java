@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jhbb.baking_time.R;
-import com.jhbb.baking_time.model.RecipeModel;
+import com.jhbb.baking_time.model.entity.RecipeModel;
 import com.jhbb.baking_time.utils.RecipeImageUtils;
 
 import java.util.List;
