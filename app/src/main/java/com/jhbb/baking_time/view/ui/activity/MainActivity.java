@@ -34,12 +34,22 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onRecipeClickListener(final RecipeModel recipeModel) {
+    public void onRecipeClickListener(RecipeModel recipeModel) {
         Log.v(TAG, "item clicado: " + recipeModel);
 
         Intent startDetailsActivity = new Intent(this, DetailsActivity.class);
         startDetailsActivity.putExtra("recipeModel", Parcels.wrap(recipeModel));
 
+        // Saves ingredients on temporary table for widget accessing
+        updateWidgetIngredients(mDb).execute(recipeModel.getIngredients());
+
+        // Broadcast current recipe to widget
+        broadcastWidgetRecipe(recipeModel);
+
+        startActivity(startDetailsActivity);
+    }
+
+    private void broadcastWidgetRecipe(RecipeModel recipe) {
         Intent updateWidget = new Intent(this, RecipeWidget.class);
         updateWidget.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 
@@ -48,18 +58,20 @@ public class MainActivity extends AppCompatActivity
         int ids[] = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(
                 new ComponentName(getApplication(), RecipeWidget.class));
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-        intent.putExtra("RECIPE", Parcels.wrap(recipeModel));
+        intent.putExtra("RECIPE", Parcels.wrap(recipe));
 
-        new AsyncTask<List<IngredientModel>, Void, Void>() {
+        sendBroadcast(intent);
+    }
+
+    public AsyncTask<List<IngredientModel>, Void, Void> updateWidgetIngredients(final AppDatabase mDb) {
+        return new AsyncTask<List<IngredientModel>, Void, Void>() {
+
             @Override
             protected Void doInBackground(List<IngredientModel>... lists) {
                 mDb.ingredientDao().deleteIngredients();
-                mDb.ingredientDao().insertIngredients(recipeModel.getIngredients());
+                mDb.ingredientDao().insertIngredients(lists[0]);
                 return null;
             }
-        }.execute();
-
-        sendBroadcast(intent);
-        startActivity(startDetailsActivity);
+        };
     }
 }
