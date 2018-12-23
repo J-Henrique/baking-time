@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.jhbb.baking_time.R;
-import com.jhbb.baking_time.model.entity.RecipeModel;
 import com.jhbb.baking_time.view.ui.activity.MainActivity;
 
 import org.parceler.Parcels;
@@ -18,7 +17,8 @@ import org.parceler.Parcels;
  */
 public class RecipeWidget extends AppWidgetProvider {
 
-    static RecipeModel mRecipe;
+    static String mRecipeName;
+    private static final String EXTRA_RECIPE_NAME = "recipeName";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -29,8 +29,8 @@ public class RecipeWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget);
         views.setOnClickPendingIntent(R.id.bowl_icon_image_view, pendingIntent);
 
-        if (mRecipe != null) {
-            views.setTextViewText(R.id.widget_recipe_name_text_view, mRecipe.getName());
+        if (mRecipeName != null) {
+            views.setTextViewText(R.id.widget_recipe_name_text_view, mRecipeName);
 
             Intent intent = new Intent(context, RecipeWidgetService.class);
             views.setRemoteAdapter(R.id.widget_recipe_ingredients_list_view, intent);
@@ -61,7 +61,9 @@ public class RecipeWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        mRecipe = Parcels.unwrap(intent.getExtras().getParcelable("RECIPE"));
+        if (intent.getExtras() != null) {
+            mRecipeName = intent.getExtras().getString(EXTRA_RECIPE_NAME);
+        }
 
         super.onReceive(context, intent);
     }

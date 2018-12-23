@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = MainActivity.class.getSimpleName();
     public static AppDatabase mDb;
 
+    private static final String EXTRA_RECIPE_MODEL = "recipeModel";
+    private static final String EXTRA_RECIPE_NAME = "recipeName";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,29 +41,28 @@ public class MainActivity extends AppCompatActivity
         Log.v(TAG, "item clicado: " + recipeModel);
 
         Intent startDetailsActivity = new Intent(this, DetailsActivity.class);
-        startDetailsActivity.putExtra("recipeModel", Parcels.wrap(recipeModel));
+        startDetailsActivity.putExtra(EXTRA_RECIPE_MODEL, Parcels.wrap(recipeModel));
 
         // Saves ingredients on temporary table for widget accessing
         updateWidgetIngredients(mDb).execute(recipeModel.getIngredients());
 
         // Broadcast current recipe to widget
-        broadcastWidgetRecipe(recipeModel);
+        broadcastWidgetRecipe(recipeModel.getName());
 
         startActivity(startDetailsActivity);
     }
 
-    private void broadcastWidgetRecipe(RecipeModel recipe) {
+    private void broadcastWidgetRecipe(String recipeName) {
         Intent updateWidget = new Intent(this, RecipeWidget.class);
         updateWidget.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 
-        Intent intent = new Intent(this, RecipeWidget.class);
-        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
         int ids[] = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(
                 new ComponentName(getApplication(), RecipeWidget.class));
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-        intent.putExtra("RECIPE", Parcels.wrap(recipe));
 
-        sendBroadcast(intent);
+        updateWidget.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        updateWidget.putExtra(EXTRA_RECIPE_NAME, recipeName);
+
+        sendBroadcast(updateWidget);
     }
 
     public AsyncTask<List<IngredientModel>, Void, Void> updateWidgetIngredients(final AppDatabase mDb) {
