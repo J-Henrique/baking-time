@@ -10,4 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <ImageView
+        android:id="@+id/error_loading_image_view"
+        android:src="@drawable/ic_round_error_symbol"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:paddingTop="100dp"
+        android:paddingBottom="100dp"
+        android:layout_height="300dp" />
+
 </LinearLayout>
